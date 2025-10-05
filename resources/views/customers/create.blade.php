@@ -1,6 +1,6 @@
 <div>
     <!-- He who is contented is rich. - Laozi -->
-    <form action="/customers" method="POST">
+    <form action={{ route('customer.store') }} method="POST">
         @csrf
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
@@ -28,4 +28,5 @@
         <br>
         <button type="submit">Create Customer</button>
     </form>
+    <a href={{ route('customers.index') }}>Back to Customer List</a>
 </div>
