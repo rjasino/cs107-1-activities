@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,9 +20,7 @@ class CustomerFactory extends Factory
     {
         return [
             //'username' => $this->faker->regexify('[a-zA-Z0-9_]{5,100}'),
-            'username' => $this->faker->unique()->userName(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'password_hash' => Hash::make('password123'), // Default password for all customers
+            'user_id' => User::factory(),
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'date_of_birth' => $this->faker->date(),
