@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -19,7 +20,7 @@ class AuthController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        if (auth()->attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
             return redirect()->intended('/dashboard');
         }
 
@@ -48,14 +49,14 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        auth()->login($user);
+        Auth::login($user);
 
-        return redirect()->route('/dashboard');
+        return redirect()->route('dashboard');
     }
 
     public function logout(Request $request)
     {
-        auth()->logout();
+        Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

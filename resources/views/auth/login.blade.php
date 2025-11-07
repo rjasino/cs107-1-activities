@@ -15,4 +15,5 @@
             <button type="submit">Login</button>
         </div>
     </form>
+    <button onclick="location.href='{{ route('register') }}'">Register</button>
 </div>

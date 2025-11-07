@@ -23,4 +23,5 @@
             <button type="submit">Register</button>
         </div>
     </form>
+    <button onclick="location.href='{{ route('login') }}'">Back to Login</button>
 </div>
