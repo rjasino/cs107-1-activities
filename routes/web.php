@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::resources([
         'customers' => CustomerController::class,
     ]);
+    //7 routes
 });
 
 
@@ -26,4 +27,5 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
+
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('auth.logout');
