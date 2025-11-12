@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,27 +32,48 @@ class AuthController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        $roles = Role::all();
+        $isAdmin = Auth::check() && Auth::user()->role && Auth::user()->role->name === 'Admin';
+
+        return view('auth.register', compact('roles', 'isAdmin'));
     }
 
     public function register(Request $request)
     {
-        $data = $request->validate([
+        // Check if user is admin
+        $isAdmin = Auth::check() && Auth::user()->role && Auth::user()->role->name === 'Admin';
+
+        $validationRules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
-        ]);
+        ];
+
+        // Only validate role_id if admin is creating the user
+        if ($isAdmin) {
+            $validationRules['role_id'] = 'required|exists:roles,id';
+        }
+
+        $data = $request->validate($validationRules);
+
+        // Get customer role ID if not admin
+        $roleId = $isAdmin ? $data['role_id'] : Role::where('name', 'Customer')->first()->id;
 
         //eloquent way to create a user
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'role_id' => $roleId,
         ]);
 
-        Auth::login($user);
+        // Only auto-login if it's a guest registration
+        if (!$isAdmin) {
+            Auth::login($user);
+            return redirect()->route('dashboard');
+        }
 
-        return redirect()->route('dashboard');
+        return redirect()->back()->with('success', 'User created successfully!');
     }
 
     public function logout(Request $request)

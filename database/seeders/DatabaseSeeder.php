@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             SupplierSeeder::class,
             ProductSeeder::class,
+            InventorySeeder::class,  //seeding inventory for all products
+            OrderSeeder::class,  //seeding orders with order details
         ]);
     }
 }

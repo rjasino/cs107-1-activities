@@ -21,11 +21,11 @@ return new class extends Migration
             if (Schema::hasColumn('customers', 'password_hash')) {
                 $table->dropColumn('password_hash');
             }
-            $table->foreignId('user_id')
-                ->after('id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+            // $table->foreignId('user_id')
+            //     ->after('id')
+            //     ->references('id')
+            //     ->on('users')
+            //     ->onDelete('cascade');
         });
     }
 
@@ -44,7 +44,7 @@ return new class extends Migration
             if (!Schema::hasColumn('customers', 'password_hash')) {
                 $table->string('password_hash')->nullable();
             }
-            $table->dropForeign(['user_id']);
+            //$table->dropForeign(['user_id']);
         });
     }
 };
