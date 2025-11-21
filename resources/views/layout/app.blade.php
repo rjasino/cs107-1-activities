@@ -12,14 +12,11 @@
 
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-            @vite(['resources/css/app.css', 'resources/js/app.js', 
-            'resources/css/main.css', 'resources/css/navigation.css',
-            'resources/css/auth.css',])
+            @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/main.css'])
         @endif
     </head>
     <body>
         @include('layout.header')
-        @include('layout.navigation')
         @yield('content')
         @include('layout.footer')
     </body>

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('auth');
 Route::get('/dashboard', function () {
     return view('dashboard', ['user' => Auth::user()]);
 })->middleware('auth')->name('dashboard');
